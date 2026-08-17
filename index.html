@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bSpot WhatsApp Bridge</title>
+<style>
+  body{font-family:-apple-system,Segoe UI,sans-serif;background:#0b1220;color:#e6edf3;display:grid;place-items:center;min-height:100vh;margin:0}
+  .card{background:#111a2e;border:1px solid #24314f;border-radius:14px;padding:28px 32px;max-width:460px}
+  h1{font-size:17px;margin:0 0 4px} .muted{color:#8b98b3;font-size:13px}
+  .row{margin-top:14px;font-size:14px} code{background:#0b1220;border:1px solid #24314f;border-radius:6px;padding:2px 6px;font-size:12px;word-break:break-all}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:#8b98b3}
+  .ok{background:#2ea043}.bad{background:#f85149}
+</style></head><body><div class="card">
+  <h1>bSpot WhatsApp Bridge</h1>
+  <div class="muted">Stable pointer to the current tunnel. The dashboard reads <code>url.json</code>; the Mac updates it automatically when the tunnel rotates.</div>
+  <div class="row"><span class="dot" id="dot"></span><span id="state">checking…</span></div>
+  <div class="row">Current tunnel: <code id="u">—</code></div>
+  <div class="row muted" id="upd"></div>
+<script>
+fetch('url.json?t='+Date.now()).then(r=>r.json()).then(j=>{
+  document.getElementById('u').textContent=j.url;
+  document.getElementById('upd').textContent='Pointer updated '+j.updated+' from '+j.host;
+  document.getElementById('state').textContent='pointer online';
+  document.getElementById('dot').className='dot ok';
+}).catch(()=>{ document.getElementById('state').textContent='pointer unreadable';
+  document.getElementById('dot').className='dot bad'; });
+</script></div></body></html>
